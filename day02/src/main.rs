@@ -1,7 +1,7 @@
 // Top-left is origin
 struct State {
-    y: usize,
     x: usize,
+    y: usize,
     aim: usize,
 }
 
@@ -12,11 +12,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("Error: expected file arg".into());
     }
 
-    let path = std::path::PathBuf::from(args[1].clone());
+    let contents = std::fs::read_to_string(&args[1])?;
 
-    let contents = std::fs::read_to_string(path)?;
-
-    let mut state = State { y: 0, x: 0, aim: 0 };
+    let mut state = State { x: 0, y: 0, aim: 0 };
 
     for l in contents.lines() {
         let mut itr = l.split_whitespace();

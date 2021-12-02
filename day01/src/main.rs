@@ -47,9 +47,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("Error: expected file arg".into());
     }
 
-    let path = std::path::PathBuf::from(args[1].clone());
-
-    let contents = std::fs::read_to_string(path)?;
+    let contents = std::fs::read_to_string(&args[1])?;
 
     let mut prev: Option<usize> = None;
     let mut count: usize = 0;
