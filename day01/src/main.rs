@@ -40,13 +40,16 @@ where
     }
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
-    println!("{:?}", args);
-    assert!(args.len() > 1);
+    if args.len() != 2 {
+        println!("usage: day01 <file>");
+        return Err("Error: expected file arg".into());
+    }
+
     let path = std::path::PathBuf::from(args[1].clone());
 
-    let contents = std::fs::read_to_string(path).expect("Failed to read file");
+    let contents = std::fs::read_to_string(path)?;
 
     let mut prev: Option<usize> = None;
     let mut count: usize = 0;
@@ -66,4 +69,6 @@ fn main() {
     }
 
     println!("{}", count);
+
+    Ok(())
 }
