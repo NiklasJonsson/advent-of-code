@@ -1,18 +1,3 @@
-#![feature(bool_to_option)]
-#![allow(dead_code)]
-
-const L2N_EMPTY: [usize; 0] = [];
-const L2N_2: [usize; 1] = [1];
-const L2N_3: [usize; 1] = [7];
-const L2N_4: [usize; 1] = [4];
-const L2N_5: [usize; 3] = [2, 3, 5];
-const L2N_6: [usize; 3] = [0, 6, 9];
-const L2N_7: [usize; 1] = [8];
-
-const LEN_TO_N: [&[usize]; 8] = [
-    &L2N_EMPTY, &L2N_EMPTY, &L2N_2, &L2N_3, &L2N_4, &L2N_5, &L2N_6, &L2N_7,
-];
-
 fn to_unique(s: &str) -> Option<usize> {
     match s.len() {
         2 => Some(1),
@@ -35,29 +20,8 @@ fn str_to_bitmask(s: &str) -> u8 {
     ret
 }
 
-fn bitmask_to_str(m: u8) -> String {
-    let mut ret = String::with_capacity(8);
-    for i in 0..8 {
-        if (m & (1 << i)) != 0 {
-            ret.push(['a', 'b', 'c', 'd', 'e', 'f', 'g'][i]);
-        }
-    }
-
-    ret
-}
-
 fn count_overlap(a: u8, b: u8) -> u32 {
     (a & b).count_ones()
-}
-
-fn dump_map(m: &Vec<u8>, name: &str) {
-    println!("#####################################################");
-    println!("Mappings {}", name);
-
-    for (i, m) in m.iter().enumerate() {
-        println!("{} -> {:08b} == {}", i, m, bitmask_to_str(*m));
-    }
-    println!("-----------------------------------------------------");
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

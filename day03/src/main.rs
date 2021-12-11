@@ -18,7 +18,7 @@ impl BitMask {
         (self.m & (1 << i)) > 0
     }
 
-    fn from_str<'a>(s: &'a str) -> Result<Self, ParseIntError> {
+    fn from_str(s: &str) -> Result<Self, ParseIntError> {
         Ok(Self {
             m: u64::from_str_radix(s, 2)?,
         })
@@ -72,11 +72,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let count = rem
                 .iter()
                 .fold(0, |acc, e| acc + if e.get(i) { 1 } else { -1 });
-            let should_be_set = if most_common {
-                count > 0 || count == 0
-            } else {
-                count < 0
-            };
+            let should_be_set = if most_common { count >= 0 } else { count < 0 };
 
             rem.retain(|e| e.get(i) == should_be_set);
             index -= 1;

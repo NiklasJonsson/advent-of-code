@@ -5,7 +5,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("Error: expected file arg".into());
     }
 
-    let mut numbers: Vec<usize> = std::fs::read_to_string(&args[1])?
+    let numbers: Vec<usize> = std::fs::read_to_string(&args[1])?
         .lines()
         .next()
         .expect("No line in file")
@@ -23,12 +23,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             start - end
         };
 
-        (0..=diff).fold(0, |acc, n| acc + n)
+        (0..=diff).sum()
     };
 
     for n in numbers {
-        for i in 0..max {
-            costs[i] += cost(n, i);
+        for (i, c) in costs.iter_mut().enumerate() {
+            *c += cost(n, i);
         }
     }
 

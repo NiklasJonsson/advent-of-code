@@ -12,7 +12,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .lines()
         .next()
         .expect("Expected atleast one line")
-        .split_terminator(",")
+        .split_terminator(',')
         .map(|l| l.parse::<usize>())
     {
         ages[n?] += 1;

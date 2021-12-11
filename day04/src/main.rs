@@ -78,11 +78,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .collect::<Result<Vec<u32>, _>>()?;
     let mut boards = Vec::new();
 
-    loop {
-        match lines.next() {
-            Some(l) => assert_eq!(l.trim(), ""),
-            None => break,
-        }
+    while let Some(l) = lines.next() {
+        assert_eq!(l.trim(), "");
         let mut board = Board::default();
         for i in 0..5 {
             let l = lines
