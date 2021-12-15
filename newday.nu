@@ -15,5 +15,6 @@ if ($next_dir | path exists) {
     open Cargo.toml | update workspace.members ($new_mem_list) | save Cargo.toml
     cargo new --bin ($next_dir)
     cp $"($prev_dir)/src/main.rs" $"($next_dir)/src/main.rs" 
+    echo (char nl) | save $"($next_dir)/input.txt
     git add $next_dir
 }
