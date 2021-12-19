@@ -15,8 +15,8 @@ fn part1(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
         let mut parts = line.split_terminator('-');
         let src = parts.next().unwrap().trim();
         let dst = parts.next().unwrap().trim();
-        graph.entry(src).or_insert(Vec::new()).push(dst);
-        graph.entry(dst).or_insert(Vec::new()).push(src);
+        graph.entry(src).or_insert_with(Vec::new).push(dst);
+        graph.entry(dst).or_insert_with(Vec::new).push(src);
     }
 
     let mut stack = vec![(vec![], "start")];
@@ -53,8 +53,8 @@ fn part2(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
         let mut parts = line.split_terminator('-');
         let src = parts.next().unwrap().trim();
         let dst = parts.next().unwrap().trim();
-        graph.entry(src).or_insert(Vec::new()).push(dst);
-        graph.entry(dst).or_insert(Vec::new()).push(src);
+        graph.entry(src).or_insert_with(Vec::new).push(dst);
+        graph.entry(dst).or_insert_with(Vec::new).push(src);
     }
 
     let mut stack = vec![vec!["start"]];

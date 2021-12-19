@@ -15,7 +15,7 @@ fn parse_fold_cmd(line: &str) -> Result<(char, u32), Box<dyn std::error::Error>>
     let fold_val = cmd.next().unwrap().parse::<u32>()?;
 
     debug_assert_eq!(axis.len(), 1);
-    Ok((axis.chars().nth(0).unwrap(), fold_val))
+    Ok((axis.chars().next().unwrap(), fold_val))
 }
 
 fn parts(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
