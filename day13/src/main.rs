@@ -1,37 +1,83 @@
 #![feature(bool_to_option)]
+#![feature(hash_drain_filter)]
 
+use std::collections::HashSet;
 use std::path::Path;
 
-fn part1(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
+type Point = [u32; 2];
 
+fn parse_fold_cmd(line: &str) -> Result<(char, u32), Box<dyn std::error::Error>> {
+    let mut parts = line.split_whitespace();
+    debug_assert_eq!(parts.next().unwrap(), "fold");
+    debug_assert_eq!(parts.next().unwrap(), "along");
+    let mut cmd = parts.next().unwrap().split('=');
+    let axis = cmd.next().unwrap();
+    let fold_val = cmd.next().unwrap().parse::<u32>()?;
+
+    debug_assert_eq!(axis.len(), 1);
+    Ok((axis.chars().nth(0).unwrap(), fold_val))
+}
+
+fn parts(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
     let contents = std::fs::read_to_string(path)?;
-    let mut points = Vec::new();
+    let mut points = HashSet::new();
     let mut lines = contents.lines();
+    let mut max_x = 0;
+    let mut max_y = 0;
     for line in &mut lines {
         if line.trim() == "" {
             break;
         }
 
-        let mut parts = line.split(',').map(|s| s.parse::<u32>().expect("Failed to parse number"));
-        points.push([parts.next().unwrap(), parts.next().unwrap()]);
+        let mut parts = line
+            .split(',')
+            .map(|s| s.parse::<u32>().expect("Failed to parse number"));
+        let p = [parts.next().unwrap(), parts.next().unwrap()];
+        max_x = std::cmp::max(p[0], max_x);
+        max_y = std::cmp::max(p[1], max_y);
+        points.insert(p);
     }
 
-    for fold_cmd in lines {
-        let mut parts = fold_cmd.split_whitespace();
-        debug_assert_eq!(parts.next().unwrap(), "fold");
-        debug_assert_eq!(parts.next().unwrap(), "along");
-        let mut cmd = parts.next().unwrap().split('=');
-        let axis = cmd.next().unwrap();
-        let val = cmd.next().unwrap().parse::<u32>()?;
+    let mut width = max_x + 1;
+    let mut height = max_y + 1;
 
-        println!("Fold: {}, {}", axis, val);
-        break;
+    for line in lines {
+        let (axis, fold_val) = parse_fold_cmd(line)?;
+
+        let i = if axis == 'y' {
+            height = fold_val;
+            1
+        } else {
+            width = fold_val;
+            0
+        };
+
+        debug_assert!(
+            !points.iter().any(|p| p[i] == fold_val),
+            "Unexpected point on fold line"
+        );
+
+        let folded: Vec<Point> = points.drain_filter(|p| p[i] > fold_val).collect();
+        for f in folded {
+            assert!(fold_val * 2 >= f[i], "{} >= {}", fold_val * 2, f[i]);
+            let mut new = f;
+            new[i] = fold_val - (f[i] - fold_val);
+            points.insert(new);
+        }
     }
 
-    Ok(())
-}
+    let mut set = HashSet::new();
+    for p in points {
+        set.insert(p);
+    }
 
-fn part2(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
+    for y in 0..height {
+        for x in 0..width {
+            let c = if !set.contains(&[x, y]) { '.' } else { '#' };
+            print!("{}", c);
+        }
+        println!();
+    }
 
     Ok(())
 }
@@ -43,8 +89,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("Error: expected file arg".into());
     }
 
-    part1(&args[1])?;
-    part2(&args[1])?;
+    parts(&args[1])?;
 
     Ok(())
 }
