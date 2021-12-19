@@ -17,5 +17,6 @@ if ($next_dir | path exists) {
     cp $"($prev_dir)/src/main.rs" $"($next_dir)/src/main.rs" 
     echo (char nl) | save $"($next_dir)/input.txt"
     echo (char nl) | save $"($next_dir)/simpleinput.txt"
+    git add Cargo.toml
     git add $next_dir
 }
