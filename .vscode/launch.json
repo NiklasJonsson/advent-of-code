@@ -12,6 +12,14 @@
             "args": ["day15/simpleinput.txt"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
+        },
+        {
+            "name": "day16 test",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/deps/day16-2810b84c335c93b7.exe",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
         }
     ]
 }
