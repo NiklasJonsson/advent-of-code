@@ -5,7 +5,6 @@ fn prio(c: char) -> u32 {
         return c as u32 - 'a' as u32 + 1;
     }
 
-
     if ('A'..='Z').contains(&c) {
         return c as u32 - 'A' as u32 + 27;
     }
@@ -27,13 +26,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut itr = contents.lines().map(str::trim).filter(|s| !s.is_empty());
     while let Ok(chunk) = itr.next_chunk::<3>() {
-        let first: std::collections::HashSet<char> = std::collections::HashSet::from_iter(chunk[0].chars());
+        let first: std::collections::HashSet<char> =
+            std::collections::HashSet::from_iter(chunk[0].chars());
         let p: Option<u32> = first
-        .iter()
-        .find_map(|&c| (chunk[1].contains(c) && chunk[2].contains(c)).then(|| prio(c)));
+            .iter()
+            .find_map(|&c| (chunk[1].contains(c) && chunk[2].contains(c)).then(|| prio(c)));
         sum += p.expect("No common item in group");
     }
-
 
     println!("Answer: {sum}");
 

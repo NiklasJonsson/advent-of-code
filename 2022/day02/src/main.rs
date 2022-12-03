@@ -18,7 +18,7 @@ impl GameResult {
             "X" => Self::Loss,
             "Y" => Self::Draw,
             "Z" => Self::Win,
-            _ => panic!("Invalid symbol {sym}")
+            _ => panic!("Invalid symbol {sym}"),
         }
     }
 
@@ -37,7 +37,7 @@ impl Shape {
             "A" => Self::Rock,
             "B" => Self::Paper,
             "C" => Self::Scissors,
-            _ => panic!("Invalid symbol {sym}")
+            _ => panic!("Invalid symbol {sym}"),
         }
     }
 
