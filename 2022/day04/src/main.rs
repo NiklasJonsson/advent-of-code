@@ -27,9 +27,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let first = parse_range(split.next().unwrap());
         let second = parse_range(split.next().unwrap());
 
-        if first[0] <= second[0] && first[1] >= second[1] {
-            sum += 1;
-        } else if second[0] <= first[0] && second[1] >= first[1] {
+        // Invert outside conditions
+        if first[1] >= second[0] && first[0] <= second[1] {
             sum += 1;
         }
     }
