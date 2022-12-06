@@ -26,8 +26,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             assert!(start < stacks.len() && end < stacks.len());
 
             let new_len = stacks[start].len() - count;
-            let tmp: Vec<char> = stacks[start].iter().skip(new_len).cloned().collect();
-            stacks[end].extend(tmp);
+            for i in new_len..stacks[start].len() {
+                let c = stacks[start][i];
+                stacks[end].push(c);
+            }
             stacks[start].truncate(new_len);
         } else {
             let itr = line.chars().skip(1);
