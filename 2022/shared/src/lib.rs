@@ -60,6 +60,17 @@ where
     }
 }
 
+pub fn parse_arg1() -> Result<String, String> {
+    let mut args = std::env::args();
+    let argc = args.len();
+    let name = args.next().expect("No caller?");
+    if argc != 2 {
+        println!("usage: {name} <file>");
+        return Err("Error: expected file arg".into());
+    }
+    Ok(args.next().expect("Just checked this!"))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
