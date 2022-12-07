@@ -71,6 +71,16 @@ pub fn parse_arg1() -> Result<String, String> {
     Ok(args.next().expect("Just checked this!"))
 }
 
+pub fn split_whitespace_n<const N: usize>(s: &str) -> Option<[&str; N]> {
+    let mut words = s.split_whitespace();
+    let tmp = std::array::from_fn(|_| words.next());
+    if tmp.iter().any(Option::is_none) {
+        return None;
+    }
+
+    Some(tmp.map(Option::unwrap))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

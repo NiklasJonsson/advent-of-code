@@ -6,8 +6,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("Error: expected file arg".into());
     }
 
-    let re = regex::Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
-
     let contents = std::fs::read_to_string(&args[1])?;
     let mut stacks: Vec<Vec<char>> = Vec::new();
 
@@ -19,10 +17,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 v.reverse();
             }
         } else if line.starts_with("move") {
-            let m = re.captures(line).unwrap();
-            let count = m[1].parse::<usize>().unwrap();
-            let start = m[2].parse::<usize>().unwrap() - 1;
-            let end = m[3].parse::<usize>().unwrap() - 1;
+            let [_move, count, _from, start, _to, end] = shared::split_whitespace_n(line).unwrap();
+            let count = count.parse::<usize>().unwrap();
+            let start = start.parse::<usize>().unwrap() - 1;
+            let end = end.parse::<usize>().unwrap() - 1;
             assert!(start < stacks.len() && end < stacks.len());
 
             let new_len = stacks[start].len() - count;
