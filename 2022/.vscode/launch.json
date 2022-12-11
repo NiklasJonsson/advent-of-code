@@ -8,9 +8,9 @@
             "request": "launch",
             "type": "cppvsdbg",
             "name": "simpleinput.txt",
-            "program": "${workspaceRoot}/target/debug/day07.exe",
+            "program": "${workspaceRoot}/target/debug/day08.exe",
             "args": ["simpleinput.txt"],
-            "cwd": "${workspaceRoot}/day07/"
+            "cwd": "${workspaceRoot}/day08/"
         }
     ]
 }

@@ -103,7 +103,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let dir_sizes = compute_dirsizes(&fs);
 
     let mut sum = 0;
-    for (k, &v) in dir_sizes.iter() {
+    for (_k, &v) in dir_sizes.iter() {
         if v < 100000 {
             sum += v;
         }
