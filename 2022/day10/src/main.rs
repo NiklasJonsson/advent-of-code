@@ -41,7 +41,7 @@ impl Machine {
     }
 }
 
-fn part1(contents: &str) -> Result<i32, Box<dyn std::error::Error>> {
+fn simulate(contents: &str) -> Machine {
     let lines = contents.lines().map(str::trim).filter(|l| !l.is_empty());
 
     let mut machine = Machine::default();
@@ -63,8 +63,13 @@ fn part1(contents: &str) -> Result<i32, Box<dyn std::error::Error>> {
         }
     }
 
-    let cycles = [20, 60, 100, 140, 180, 220];
+    machine
+}
 
+fn part1(contents: &str) -> Result<i32, Box<dyn std::error::Error>> {
+    let machine = simulate(contents);
+
+    let cycles = [20, 60, 100, 140, 180, 220];
     let sum = cycles
         .iter()
         .map(|c| machine.value_at(*c) * *c as i32)
@@ -72,7 +77,23 @@ fn part1(contents: &str) -> Result<i32, Box<dyn std::error::Error>> {
     Ok(sum)
 }
 
-fn part2(contents: &str) -> Result<usize, Box<dyn std::error::Error>> {
+fn part2(contents: &str) -> Result<i32, Box<dyn std::error::Error>> {
+    let machine = simulate(contents);
+
+    let width = 40;
+    for row in 0..6 {
+        for x in 0..width {
+            let pixel = x + row * width;
+            let sprite_pos = machine.value_at(pixel + 1);
+            if (x as i32).abs_diff(sprite_pos) <= 1 {
+                print!("#");
+            } else {
+                print!(".");
+            }
+        }
+        println!();
+    }
+
     Ok(0)
 }
 
