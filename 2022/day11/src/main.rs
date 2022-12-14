@@ -30,6 +30,8 @@ fn parse(contents: &str) -> Vec<Monkey> {
 
         let items_line = lines.next().expect("Missing starting items line");
         let ([_starting, _items], items) = shared::take_n_words(items_line).unwrap();
+        assert_eq!(_starting, "Starting");
+        assert_eq!(_items, "items:");
         let items: Vec<usize> = items
             .split(',')
             .map(|e| e.trim().parse::<usize>().unwrap())
@@ -58,15 +60,19 @@ fn parse(contents: &str) -> Vec<Monkey> {
         let [_test, _divisible, _by, num] = shared::split_whitespace_n(test_line).unwrap();
         let num = num.parse::<usize>().expect("Failed to parse div number");
 
-        let true_line = lines.next().expect("Missing true line");
-        let [_if, _true, _throw, _to, _monkey, idx] =
-            shared::split_whitespace_n(true_line).unwrap();
-        let true_idx = idx.parse::<usize>().expect("Failed to parse true monkey");
+        let true_idx = {
+            let true_line = lines.next().expect("Missing true line");
+            let [_if, _true, _throw, _to, _monkey, idx] =
+                shared::split_whitespace_n(true_line).unwrap();
+            idx.parse::<usize>().expect("Failed to parse true monkey")
+        };
 
-        let false_line = lines.next().expect("Missing test line");
-        let [_if, _true, _throw, _to, _monkey, idx] =
-            shared::split_whitespace_n(false_line).unwrap();
-        let false_idx = idx.parse::<usize>().expect("Failed to parse false monkey");
+        let false_idx = {
+            let false_line = lines.next().expect("Missing false line");
+            let [_if, _false, _throw, _to, _monkey, idx] =
+                shared::split_whitespace_n(false_line).unwrap();
+            idx.parse::<usize>().expect("Failed to parse false monkey")
+        };
         let test = move |worry: usize| -> usize {
             if worry % num == 0 {
                 true_idx
@@ -84,7 +90,6 @@ fn parse(contents: &str) -> Vec<Monkey> {
 
     out
 }
-
 
 fn part1(contents: &str) -> Result<usize, Box<dyn std::error::Error>> {
     let mut monkeys = parse(contents);
@@ -116,9 +121,14 @@ fn part1(contents: &str) -> Result<usize, Box<dyn std::error::Error>> {
 fn part2(contents: &str) -> Result<usize, Box<dyn std::error::Error>> {
     let mut monkeys = parse(contents);
 
+    let item_count: usize = monkeys.iter().map(|x| x.items.len()).sum();
+
     let mut records = vec![0; monkeys.len()];
 
-    for _i in 0..20 {
+    for _i in 0..10000 {
+        if [1, 20, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000].contains(&_i) {
+            dbg!(_i, &records);
+        }
         for (mi, record) in (0..monkeys.len()).zip(records.iter_mut()) {
             let items = std::mem::take(&mut monkeys[mi].items);
             for item in items {
@@ -129,6 +139,7 @@ fn part2(contents: &str) -> Result<usize, Box<dyn std::error::Error>> {
                 monkeys[dst].items.push(lvl);
             }
         }
+        assert_eq!(item_count, monkeys.iter().map(|m| m.items.len()).sum());
     }
 
     records.sort();
