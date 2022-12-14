@@ -1,3 +1,5 @@
+#![feature(str_split_whitespace_as_str)]
+
 pub struct WindowsItr<I, const N: usize>
 where
     I: Iterator,
@@ -79,6 +81,16 @@ pub fn split_whitespace_n<const N: usize>(s: &str) -> Option<[&str; N]> {
     }
 
     Some(tmp.map(Option::unwrap))
+}
+
+pub fn take_n_words<const N: usize>(s: &str) -> Option<([&str; N], &str)> {
+    let mut words = s.split_whitespace();
+    let tmp = std::array::from_fn(|_| words.next());
+    if tmp.iter().any(Option::is_none) {
+        return None;
+    }
+
+    Some((tmp.map(Option::unwrap), words.as_str()))
 }
 
 #[cfg(test)]
