@@ -1,7 +1,5 @@
-#![feature(bool_to_option)]
-
-use std::path::Path;
 use std::ops::Range;
+use std::path::Path;
 
 type Area = [Range<i32>; 2];
 
@@ -44,7 +42,8 @@ fn simulate(a: Area, mut vel: [i32; 2]) -> Vec<[i32; 2]> {
         vel[0] += x_diff;
         vel[1] -= 1;
 
-        if pos[0] <= a[0].end && pos[0] >= a[0].start && pos[1] <= a[1].end && pos[1] >= a[1].start {
+        if pos[0] <= a[0].end && pos[0] >= a[0].start && pos[1] <= a[1].end && pos[1] >= a[1].start
+        {
             break;
         } else if (pos[0] > a[0].end && vel[0] > 0) || pos[1] < a[1].start {
             break;

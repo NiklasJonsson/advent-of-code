@@ -1,5 +1,3 @@
-#![feature(bool_to_option)]
-
 use std::collections::HashMap;
 use std::path::Path;
 

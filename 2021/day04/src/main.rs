@@ -1,6 +1,3 @@
-#![feature(drain_filter)]
-#![feature(bool_to_option)]
-
 #[derive(Default, Clone, Copy, PartialEq, Eq, Debug)]
 struct Board {
     numbers: [[u32; 5]; 5],

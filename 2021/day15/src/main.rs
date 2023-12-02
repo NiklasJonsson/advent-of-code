@@ -1,5 +1,3 @@
-#![feature(bool_to_option)]
-
 use std::path::Path;
 const NEIGHBOURS: [(isize, isize); 4] = [(0, -1), (-1, 0), (1, 0), (0, 1)];
 

@@ -4,5 +4,5 @@ name = "day10"
 version = "0.1.0"
 
 [dependencies]
-shared = { path = "../shared" }
+shared = { path = "../../shared" }
 

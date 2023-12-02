@@ -1,5 +1,3 @@
-#![feature(bool_to_option)]
-
 const NEIGHBOURS: [(isize, isize); 8] = [
     (-1, -1),
     (0, -1),

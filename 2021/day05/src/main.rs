@@ -1,5 +1,3 @@
-#![feature(drain_filter)]
-#![feature(bool_to_option)]
 #![allow(dead_code)]
 
 use std::path::Path;

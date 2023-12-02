@@ -1,5 +1,3 @@
-#![feature(drain_filter)]
-
 use std::num::ParseIntError;
 
 #[derive(Default, Clone, Copy, PartialEq, Eq, Debug)]

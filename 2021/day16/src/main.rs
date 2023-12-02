@@ -1,5 +1,3 @@
-#![feature(bool_to_option)]
-
 use std::path::Path;
 
 #[derive(Debug, PartialEq, Eq)]

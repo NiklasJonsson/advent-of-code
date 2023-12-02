@@ -1,4 +1,4 @@
-#![feature(str_split_whitespace_as_str)]
+#![feature(str_split_whitespace_remainder)]
 
 pub struct WindowsItr<I, const N: usize>
 where
@@ -90,7 +90,7 @@ pub fn take_n_words<const N: usize>(s: &str) -> Option<([&str; N], &str)> {
         return None;
     }
 
-    Some((tmp.map(Option::unwrap), words.as_str()))
+    Some((tmp.map(Option::unwrap), words.remainder().unwrap_or("")))
 }
 
 #[cfg(test)]

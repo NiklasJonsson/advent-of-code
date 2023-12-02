@@ -1,5 +1,4 @@
-#![feature(bool_to_option)]
-#![feature(hash_drain_filter)]
+#![feature(hash_extract_if)]
 
 use std::collections::HashSet;
 use std::path::Path;
@@ -57,7 +56,7 @@ fn parts(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
             "Unexpected point on fold line"
         );
 
-        let folded: Vec<Point> = points.drain_filter(|p| p[i] > fold_val).collect();
+        let folded: Vec<Point> = points.extract_if(|p| p[i] > fold_val).collect();
         for f in folded {
             assert!(fold_val * 2 >= f[i], "{} >= {}", fold_val * 2, f[i]);
             let mut new = f;

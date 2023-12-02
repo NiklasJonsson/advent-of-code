@@ -1,5 +1,3 @@
-#![feature(bool_to_option)]
-
 use std::path::Path;
 
 fn part1(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
@@ -74,7 +72,7 @@ fn part2(path: impl AsRef<Path>) -> Result<(), Box<dyn std::error::Error>> {
     scores.sort_unstable();
     dbg!(&scores);
 
-    println!("autocomplete score: {}", scores[(scores.len() / 2)]);
+    println!("autocomplete score: {}", scores[scores.len() / 2]);
 
     Ok(())
 }
