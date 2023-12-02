@@ -1,11 +1,7 @@
 fn part1(contents: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let mut sum = 0;
 
-    for line in contents.split('\n') {
-        if line == "" {
-            continue;
-        }
-
+    for line in shared::input_lines(contents) {
         let mut first = None;
         let mut last = None;
 
@@ -39,12 +35,7 @@ const NUMBERS: [(&'static str, u32); 9] = [
 fn part2(contents: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let mut sum = 0;
 
-    for line in contents.split('\n') {
-        let line = line.trim();
-        if line.is_empty() {
-            continue;
-        }
-
+    for line in shared::input_lines(contents) {
         let mut first = None;
         let mut last = None;
 

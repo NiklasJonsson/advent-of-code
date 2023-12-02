@@ -5,12 +5,7 @@ fn part1(contents: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let max_g = 13;
     let max_b = 14;
 
-    for line in contents.split('\n') {
-        let line = line.trim();
-        if line.is_empty() {
-            continue;
-        }
-
+    for line in shared::input_lines(contents) {
         let ([_game, id], rem) = shared::take_n_words::<2>(line).unwrap();
         let id = id
             .strip_suffix(':')
@@ -51,19 +46,8 @@ fn part1(contents: &str) -> Result<u32, Box<dyn std::error::Error>> {
 fn part2(contents: &str) -> Result<u32, Box<dyn std::error::Error>> {
     let mut sum = 0;
 
-    for line in contents.split('\n') {
-        let line = line.trim();
-        if line.is_empty() {
-            continue;
-        }
-
-        let ([_game, id], rem) = shared::take_n_words::<2>(line).unwrap();
-        let id = id
-            .strip_suffix(':')
-            .expect("No : suffic for game id")
-            .parse::<u32>()
-            .expect("Failed to parse game id");
-
+    for line in shared::input_lines(contents) {
+        let ([_game, _id], rem) = shared::take_n_words::<2>(line).unwrap();
         let mut max_r = 0;
         let mut max_g = 0;
         let mut max_b = 0;

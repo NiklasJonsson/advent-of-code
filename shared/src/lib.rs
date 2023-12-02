@@ -113,6 +113,7 @@ pub fn parse_args() -> Result<Args, Box<dyn std::error::Error>> {
     })
 }
 
+/// Split `s` into `N` whitespace-separated words
 pub fn split_whitespace_n<const N: usize>(s: &str) -> Option<[&str; N]> {
     let mut words = s.split_whitespace();
     let tmp = std::array::from_fn(|_| words.next());
@@ -123,6 +124,7 @@ pub fn split_whitespace_n<const N: usize>(s: &str) -> Option<[&str; N]> {
     Some(tmp.map(Option::unwrap))
 }
 
+/// Take N whitespace-separated words from `s` and return the remainder.
 pub fn take_n_words<const N: usize>(s: &str) -> Option<([&str; N], &str)> {
     let mut words = s.split_whitespace();
     let tmp = std::array::from_fn(|_| words.next());
@@ -131,6 +133,11 @@ pub fn take_n_words<const N: usize>(s: &str) -> Option<([&str; N], &str)> {
     }
 
     Some((tmp.map(Option::unwrap), words.remainder().unwrap_or("")))
+}
+
+/// Split `s` into lines, trimming whitespace and removing empty lines.
+pub fn input_lines(s: &str) -> impl Iterator<Item = &str> {
+    s.split('\n').map(|l| l.trim()).filter(|l| !l.is_empty())
 }
 
 #[cfg(test)]
