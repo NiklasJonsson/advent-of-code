@@ -3,7 +3,7 @@ def day_dirname [n: int] {
     echo $"day($number)"
 }
 
-let n = (ls day* | sort-by name | get name | last 1 | path basename | str substring '3,' | into int | get 0)
+let n = (ls day* | sort-by name | get name | last 1 | path basename | str substring 3.. | into int | get 0)
 
 let prev_dir = (day_dirname $n | path expand)
 let next_dir = (day_dirname ($n + 1))
