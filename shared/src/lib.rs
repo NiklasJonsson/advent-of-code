@@ -73,34 +73,44 @@ pub fn parse_arg1() -> Result<String, String> {
     Ok(args.next().expect("Just checked this!"))
 }
 
-pub fn parse_args(fname: &mut String, part1: &mut bool, part2: &mut bool) -> Result<(), String> {
+pub struct Args {
+    pub fname: String,
+    pub do_part1: bool,
+    pub do_part2: bool,
+}
+
+pub fn parse_args() -> Result<Args, Box<dyn std::error::Error>> {
     let mut args = std::env::args();
     let argc = args.len();
     let name = args.next().expect("No caller?");
-    if argc != 2 {
+    if argc < 2 {
         println!("usage: {name} <file>");
         return Err("Error: expected file arg".into());
     }
 
-    *part1 = false;
-    *part1 = false;
+    let mut do_part1 = false;
+    let mut do_part2 = false;
+    let mut fname = String::new();
 
     for a in args {
         if a == "--part1" {
-            *part1 = true;
+            do_part1 = true;
         } else if a == "--part2" {
-            *part2 = true;
+            do_part2 = true;
         } else {
-            *fname = String::from(a);
+            fname = String::from(a);
         }
     }
 
-    if !*part1 && !*part2 {
-        *part1 = true;
-        *part2 = true;
+    if !do_part1 && !do_part2 {
+        do_part1 = true;
+        do_part2 = true;
     }
-
-    Ok(())
+    Ok(Args {
+        fname,
+        do_part1,
+        do_part2,
+    })
 }
 
 pub fn split_whitespace_n<const N: usize>(s: &str) -> Option<[&str; N]> {
