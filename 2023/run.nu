@@ -1,12 +1,7 @@
-def day_dirname [n: int] {
-    let number = ($"($n)" | str lpad -l 2 -c '0')
-    echo $"day($number)"
-}
+let day_dir = ( ls day* | sort-by name | get name | last 1 | path basename | get 0)
 
-let n = (ls day* | sort-by name | get name | last 1 | path basename | str substring '3,' | into int | get 0)
-
-echo $"Running day ($n)"
+echo $"Running ($day_dir)(char nl)"
 echo $"Running simpleinput (char nl)"
-cargo run --bin $"(day_dirname $n)" -- $"(day_dirname $n)/simpleinput.txt"
+cargo run --bin $day_dir -- $"($day_dir)/simpleinput.txt"
 echo $"Running input (char nl)"
-cargo run --bin $"(day_dirname $n)" -- $"(day_dirname $n)/input.txt"
+# cargo run --bin $day_dir -- $"($day_dir)/input.txt"

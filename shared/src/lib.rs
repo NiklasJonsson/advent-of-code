@@ -73,6 +73,36 @@ pub fn parse_arg1() -> Result<String, String> {
     Ok(args.next().expect("Just checked this!"))
 }
 
+pub fn parse_args(fname: &mut String, part1: &mut bool, part2: &mut bool) -> Result<(), String> {
+    let mut args = std::env::args();
+    let argc = args.len();
+    let name = args.next().expect("No caller?");
+    if argc != 2 {
+        println!("usage: {name} <file>");
+        return Err("Error: expected file arg".into());
+    }
+
+    *part1 = false;
+    *part1 = false;
+
+    for a in args {
+        if a == "--part1" {
+            *part1 = true;
+        } else if a == "--part2" {
+            *part2 = true;
+        } else {
+            *fname = String::from(a);
+        }
+    }
+
+    if !*part1 && !*part2 {
+        *part1 = true;
+        *part2 = true;
+    }
+
+    Ok(())
+}
+
 pub fn split_whitespace_n<const N: usize>(s: &str) -> Option<[&str; N]> {
     let mut words = s.split_whitespace();
     let tmp = std::array::from_fn(|_| words.next());
