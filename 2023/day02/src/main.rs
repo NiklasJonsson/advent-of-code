@@ -85,7 +85,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         do_part1,
         do_part2,
     } = shared::parse_args()?;
-    let contents = std::fs::read_to_string(&fname)?;
+    let contents = std::fs::read_to_string(fname)?;
 
     if do_part1 {
         let part1 = part1(&contents)?;

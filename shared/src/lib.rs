@@ -98,7 +98,7 @@ pub fn parse_args() -> Result<Args, Box<dyn std::error::Error>> {
         } else if a == "--part2" {
             do_part2 = true;
         } else {
-            fname = String::from(a);
+            fname = a;
         }
     }
 

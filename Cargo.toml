@@ -1,2 +1,3 @@
 [workspace]
-members = ["shared"]
+members = ["shared", "2023/day01", "2023/day02", "2023/day03"]
+resolver = "2"

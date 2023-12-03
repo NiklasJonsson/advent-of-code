@@ -5,11 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "day15",
+            "name": "day03",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/target/debug/day15.exe",
-            "args": ["day15/simpleinput.txt"],
+            "program": "${workspaceFolder}/target/debug/day03.exe",
+            "args": [
+                "2023/day03/simpleinput.txt"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
         },
